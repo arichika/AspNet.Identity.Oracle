@@ -25,6 +25,12 @@ Steps to run project
 
 var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<ApplicationDbContext>() as OracleDatabase));
 
+Notice
+======
+
+Please change to the table name you want.  
+By default, "ANID2{Purpose}" (e.g. "ANID2USERS"), which means that "AspNetUsers" ASP.NET Identity is created automatically.  
+
 See Also
 ========
 
