@@ -27,7 +27,7 @@ namespace AspNet.Identity.Oracle
         /// <returns></returns>
         public List<string> FindByUserId(string userId)
         {
-            const string commandText = @"SELECT ANID2ROLES.NAME FROM ANID2USERROLES, ANID2ROLES WHERE USERID = :USERID AND ANID2USERROLES.ROLEID = ANID2ROLES.ID";
+            const string commandText = @"SELECT NAME FROM ANID2USERROLES, ANID2ROLES WHERE USERID = :USERID AND ANID2USERROLES.ROLEID = ANID2ROLES.ID";
             var parameters = new List<OracleParameter>
             {
                 new OracleParameter{ ParameterName = "USERID", Value = userId, OracleDbType = OracleDbType.Varchar2 }
