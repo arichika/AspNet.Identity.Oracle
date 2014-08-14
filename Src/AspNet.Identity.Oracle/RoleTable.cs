@@ -27,7 +27,7 @@ namespace AspNet.Identity.Oracle
         /// <returns></returns>
         public int Delete(string roleId)
         {
-            const string commandText = @"DELETE FROM ROLES WHERE ID = :ID";
+            const string commandText = @"DELETE FROM ANID2ROLES WHERE ID = :ID";
             var parameters = new List<OracleParameter>
             {
                 new OracleParameter {ParameterName = "ID", Value = roleId, OracleDbType = OracleDbType.Varchar2 },
@@ -43,7 +43,7 @@ namespace AspNet.Identity.Oracle
         /// <returns></returns>
         public int Insert(IdentityRole role)
         {
-            const string commandText = @"INSERT INTO ROLES (ID, NAME) VALUES (:ID, :NAME)";
+            const string commandText = @"INSERT INTO ANID2ROLES (ID, NAME) VALUES (:ID, :NAME)";
             var parameters = new List<OracleParameter>
             {
                 new OracleParameter {ParameterName = "ID", Value = role.Id, OracleDbType = OracleDbType.Varchar2 },
@@ -60,7 +60,7 @@ namespace AspNet.Identity.Oracle
         /// <returns>Role name</returns>
         public string GetRoleName(string roleId)
         {
-            const string commandText = @"SELECT NAME FROM ROLES WHERE ID = :ID";
+            const string commandText = @"SELECT NAME FROM ANID2ROLES WHERE ID = :ID";
             var parameters = new List<OracleParameter>
             {
                 new OracleParameter {ParameterName = "ID", Value = roleId, OracleDbType = OracleDbType.Varchar2 },
@@ -76,15 +76,14 @@ namespace AspNet.Identity.Oracle
         /// <returns>Role's Id</returns>
         public string GetRoleId(string roleName)
         {
-            string roleId = null;
-            const string commandText = @"SELECT ID FROM ROLES WHERE NAME = :NAME";
+            const string commandText = @"SELECT ID FROM ANID2ROLES WHERE NAME = :NAME";
             var parameters = new List<OracleParameter>
             {
                 new OracleParameter {ParameterName = "NAME", Value = roleName, OracleDbType = OracleDbType.Varchar2 },
             };
 
             var result = _database.QueryValue(commandText, parameters);
-            return result != null ? Convert.ToString(result) : roleId;
+            return result != null ? Convert.ToString(result) : null;
         }
 
         /// <summary>
@@ -126,7 +125,7 @@ namespace AspNet.Identity.Oracle
 
         public int Update(IdentityRole role)
         {
-            const string commandText = @"UPDATE ROLES SET NAME = :NAME WHERE ID = :ID";
+            const string commandText = @"UPDATE ANID2ROLES SET NAME = :NAME WHERE ID = :ID";
             var parameters = new List<OracleParameter>
             {
                 new OracleParameter {ParameterName = "ID", Value = role.Id, OracleDbType = OracleDbType.Varchar2 },

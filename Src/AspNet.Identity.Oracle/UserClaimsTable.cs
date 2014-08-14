@@ -29,7 +29,7 @@ namespace AspNet.Identity.Oracle
         public ClaimsIdentity FindByUserId(string userId)
         {
             var claims = new ClaimsIdentity();
-            const string commandText = @"SELECT * FROM USERCLAIMS WHERE USERID = :USERID";
+            const string commandText = @"SELECT * FROM ANID2USERCLAIMS WHERE USERID = :USERID";
             var parameters = new List<OracleParameter>
             {
                 new OracleParameter{ ParameterName = "USERID", Value = userId, OracleDbType = OracleDbType.Varchar2 },
@@ -51,7 +51,7 @@ namespace AspNet.Identity.Oracle
         /// <returns></returns>
         public int Delete(string userId)
         {
-            const string commandText = @"DELETE FROM USERCLAIMS WHERE USERID = :USERID";
+            const string commandText = @"DELETE FROM ANID2USERCLAIMS WHERE USERID = :USERID";
             var parameters = new List<OracleParameter>
             {
                 new OracleParameter{ ParameterName = "USERID", Value = userId, OracleDbType = OracleDbType.Varchar2 },
@@ -63,12 +63,12 @@ namespace AspNet.Identity.Oracle
         /// <summary>
         /// Inserts a new claim in UserClaims table
         /// </summary>
-        /// <param name="userClaim">User's claim to be added</param>
+        /// <param name="claim">User's claim to be added</param>
         /// <param name="userId">User's id</param>
         /// <returns></returns>
         public int Insert(Claim claim, string userId)
         {
-            const string commandText = @"INSERT INTO USERCLAIMS (CLAIMVALUE, CLAIMTYPE, USERID) VALUES (:VALUE, :TYPE, :USERID)";
+            const string commandText = @"INSERT INTO ANID2USERCLAIMS (CLAIMVALUE, CLAIMTYPE, USERID) VALUES (:VALUE, :TYPE, :USERID)";
             var parameters = new List<OracleParameter>
             {
                 new OracleParameter{ ParameterName = "USERID", Value = userId, OracleDbType = OracleDbType.Varchar2 },
@@ -87,7 +87,7 @@ namespace AspNet.Identity.Oracle
         /// <returns></returns>
         public int Delete(IdentityUser user, Claim claim)
         {
-            const string commandText = @"DELETE FROM USERCLAIMS WHERE USERID = :USERID AND @CLAIMVALUE = :VALUE AND CLAIMTYPE = :TYPE";
+            const string commandText = @"DELETE FROM ANID2USERCLAIMS WHERE USERID = :USERID AND @CLAIMVALUE = :VALUE AND CLAIMTYPE = :TYPE";
             var parameters = new List<OracleParameter>
             {
                 new OracleParameter{ ParameterName = "USERID", Value = user.Id, OracleDbType = OracleDbType.Varchar2 },

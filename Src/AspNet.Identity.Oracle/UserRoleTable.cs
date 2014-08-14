@@ -27,7 +27,7 @@ namespace AspNet.Identity.Oracle
         /// <returns></returns>
         public List<string> FindByUserId(string userId)
         {
-            const string commandText = @"SELECT ROLES.NAME FROM USERROLES, ROLES WHERE USERROLES.USERID = :USERID AND USERROLES.ROLEID = ROLES.ID";
+            const string commandText = @"SELECT NAME FROM ANID2USERROLES, ANID2ROLES WHERE USERID = :USERID AND ANID2USERROLES.ROLEID = ANID2ROLES.ID";
             var parameters = new List<OracleParameter>
             {
                 new OracleParameter{ ParameterName = "USERID", Value = userId, OracleDbType = OracleDbType.Varchar2 }
@@ -45,7 +45,7 @@ namespace AspNet.Identity.Oracle
         /// <returns></returns>
         public int Delete(string userId)
         {
-            const string commandText = @"DELETE FROM USERROLES WHERE USERID = :USERID";
+            const string commandText = @"DELETE FROM ANID2USERROLES WHERE USERID = :USERID";
             var parameters = new List<OracleParameter>
             {
                 new OracleParameter{ ParameterName = "USERID", Value = userId, OracleDbType = OracleDbType.Varchar2 }
@@ -62,7 +62,7 @@ namespace AspNet.Identity.Oracle
         /// <returns></returns>
         public int Insert(IdentityUser user, string roleId)
         {
-            const string commandText = @"INSERT INTO USERROLES (USERID, ROLEID) VALUES (:USERID, :ROLEID)";
+            const string commandText = @"INSERT INTO ANID2USERROLES (USERID, ROLEID) VALUES (:USERID, :ROLEID)";
             var parameters = new List<OracleParameter>
             {
                 new OracleParameter{ ParameterName = "USERID", Value = user.Id, OracleDbType = OracleDbType.Varchar2},
