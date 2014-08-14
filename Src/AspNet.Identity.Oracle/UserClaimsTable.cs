@@ -63,7 +63,7 @@ namespace AspNet.Identity.Oracle
         /// <summary>
         /// Inserts a new claim in UserClaims table
         /// </summary>
-        /// <param name="userClaim">User's claim to be added</param>
+        /// <param name="claim">User's claim to be added</param>
         /// <param name="userId">User's id</param>
         /// <returns></returns>
         public int Insert(Claim claim, string userId)

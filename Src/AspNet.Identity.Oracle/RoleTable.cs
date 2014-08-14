@@ -76,7 +76,6 @@ namespace AspNet.Identity.Oracle
         /// <returns>Role's Id</returns>
         public string GetRoleId(string roleName)
         {
-            string roleId = null;
             const string commandText = @"SELECT ID FROM ANID2ROLES WHERE NAME = :NAME";
             var parameters = new List<OracleParameter>
             {
@@ -84,7 +83,7 @@ namespace AspNet.Identity.Oracle
             };
 
             var result = _database.QueryValue(commandText, parameters);
-            return result != null ? Convert.ToString(result) : roleId;
+            return result != null ? Convert.ToString(result) : null;
         }
 
         /// <summary>

@@ -60,7 +60,7 @@ namespace AspNet.Identity.Oracle
         /// <returns></returns>
         public TUser GetUserById(string userId)
         {
-            TUser user = null;
+            TUser user;
             const string commandText = @"SELECT * FROM ANID2USERS WHERE ID = :USERID";
             var parameters = new List<OracleParameter>
             {
@@ -68,7 +68,7 @@ namespace AspNet.Identity.Oracle
             };
 
             var rows = _database.Query(commandText, parameters);
-            if (rows == null || rows.Count != 1) return user;
+            if (rows == null || rows.Count != 1) return null;
 
             var row = rows[0];
             user = (TUser)Activator.CreateInstance(typeof(TUser));
@@ -177,7 +177,7 @@ namespace AspNet.Identity.Oracle
                 new OracleParameter{ ParameterName = "USERID", Value =  userId, OracleDbType = OracleDbType.Varchar2 }
             };
 
-            return _database.GetStrValue(commandText, parameters);;
+            return _database.GetStrValue(commandText, parameters);
         }
 
         /// <summary>

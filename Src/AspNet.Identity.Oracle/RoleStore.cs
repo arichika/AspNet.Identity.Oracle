@@ -70,14 +70,14 @@ namespace AspNet.Identity.Oracle
         {
             var result = roleTable.GetRoleById(roleId) as TRole;
 
-            return Task.FromResult<TRole>(result);
+            return Task.FromResult(result);
         }
 
         public Task<TRole> FindByNameAsync(string roleName)
         {
             var result = roleTable.GetRoleByName(roleName) as TRole;
 
-            return Task.FromResult<TRole>(result);
+            return Task.FromResult(result);
         }
 
         public Task UpdateAsync(TRole role)

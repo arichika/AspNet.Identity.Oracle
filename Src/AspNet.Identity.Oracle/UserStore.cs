@@ -91,9 +91,9 @@ namespace AspNet.Identity.Oracle
                 throw new ArgumentException("Null or empty argument: userId");
             }
 
-            var result = userTable.GetUserById(userId) as TUser;
+            var result = userTable.GetUserById(userId);
 
-            return Task.FromResult<TUser>(result ?? null);
+            return Task.FromResult(result);
         }
 
         /// <summary>
@@ -108,12 +108,12 @@ namespace AspNet.Identity.Oracle
                 throw new ArgumentException("Null or empty argument: userName");
             }
 
-            var result = userTable.GetUserByName(userName) as List<TUser>;
+            var result = userTable.GetUserByName(userName);
 
             // Should I throw if > 1 user?
             if (result != null && result.Count == 1)
             {
-                return Task.FromResult<TUser>(result[0]);
+                return Task.FromResult(result[0]);
             }
 
             return Task.FromResult<TUser>(null);
@@ -240,9 +240,9 @@ namespace AspNet.Identity.Oracle
             var userId = userLoginsTable.FindUserIdByLogin(login);
             if (userId == null) return Task.FromResult<TUser>(null);
 
-            var user = userTable.GetUserById(userId) as TUser;
+            var user = userTable.GetUserById(userId);
 
-            return Task.FromResult<TUser>(user ?? null);
+            return Task.FromResult(user);
         }
 
         /// <summary>
@@ -259,7 +259,7 @@ namespace AspNet.Identity.Oracle
 
             var logins = userLoginsTable.FindByUserId(user.Id);
 
-            return Task.FromResult<IList<UserLoginInfo>>(logins ?? null);
+            return Task.FromResult<IList<UserLoginInfo>>(logins);
         }
 
         /// <summary>
@@ -357,11 +357,11 @@ namespace AspNet.Identity.Oracle
             {
                 if (roles != null && roles.Contains(role))
                 {
-                    return Task.FromResult<bool>(true);
+                    return Task.FromResult(true);
                 }
             }
 
-            return Task.FromResult<bool>(false);
+            return Task.FromResult(false);
         }
 
         /// <summary>
@@ -399,7 +399,7 @@ namespace AspNet.Identity.Oracle
         {
             var passwordHash = userTable.GetPasswordHash(user.Id);
 
-            return Task.FromResult<string>(passwordHash);
+            return Task.FromResult(passwordHash);
         }
 
         /// <summary>
@@ -411,7 +411,7 @@ namespace AspNet.Identity.Oracle
         {
             var hasPassword = !string.IsNullOrEmpty(userTable.GetPasswordHash(user.Id));
 
-            return Task.FromResult<bool>(Boolean.Parse(hasPassword.ToString()));
+            return Task.FromResult(Boolean.Parse(hasPassword.ToString()));
         }
 
         /// <summary>
@@ -513,8 +513,8 @@ namespace AspNet.Identity.Oracle
                 throw new ArgumentNullException("email");
             }
 
-            var result = userTable.GetUserByEmail(email) as TUser;
-            return Task.FromResult<TUser>(result ?? null);
+            var result = userTable.GetUserByEmail(email).FirstOrDefault();
+            return Task.FromResult(result);
         }
 
         /// <summary>
