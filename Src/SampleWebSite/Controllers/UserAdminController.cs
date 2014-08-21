@@ -55,7 +55,7 @@ namespace IdentitySample.Controllers
         // GET: /Users/
         public async Task<ActionResult> Index()
         {
-            return View(await UserManager.Users.ToListAsync());
+            return View(UserManager.Users.ToList());
         }
 
         //

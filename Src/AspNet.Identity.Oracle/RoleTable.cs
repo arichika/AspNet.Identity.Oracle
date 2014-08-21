@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Oracle.DataAccess.Client;
 
 namespace AspNet.Identity.Oracle
@@ -123,16 +124,37 @@ namespace AspNet.Identity.Oracle
             return role;
         }
 
+        /// <summary>
+        /// Update Role's attributes
+        /// </summary>
+        /// <param name="role"></param>
+        /// <returns></returns>
         public int Update(IdentityRole role)
         {
             const string commandText = @"UPDATE ANID2ROLES SET NAME = :NAME WHERE ID = :ID";
             var parameters = new List<OracleParameter>
             {
-                new OracleParameter {ParameterName = "ID", Value = role.Id, OracleDbType = OracleDbType.Varchar2 },
                 new OracleParameter {ParameterName = "NAME", Value = role.Name, OracleDbType = OracleDbType.Varchar2 },
+                new OracleParameter {ParameterName = "ID", Value = role.Id, OracleDbType = OracleDbType.Varchar2 },
             };
             
             return _database.Execute(commandText, parameters);
+        }
+
+        /// <summary>
+        /// Get the all Roles
+        /// </summary>
+        /// <returns>IdentityRole</returns>
+        public IEnumerable<IdentityRole> GetRoles()
+        {
+            const string commandText = @"SELECT ID, NAME FROM ANID2ROLES";
+            var results = _database.Query(commandText, null);
+
+            return results.Select(result => new IdentityRole
+            {
+                Id = string.IsNullOrEmpty(result["ID"]) ? null : result["ID"],
+                Name = string.IsNullOrEmpty(result["NAME"]) ? null : result["NAME"],
+            }).ToList();
         }
     }
 }

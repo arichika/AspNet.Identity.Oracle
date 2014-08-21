@@ -30,14 +30,20 @@ namespace AspNet.Identity.Oracle
         private UserLoginsTable userLoginsTable;
         public OracleDatabase Database { get; private set; }
 
+        /// <summary>
+        /// Get all Users defined.
+        /// This code is a loose implementation.
+        /// An occurrence of a performance problem is when you get a large amount of data.
+        /// </summary>
         public IQueryable<TUser> Users
         {
             get
             {
-                throw new NotImplementedException();
+                // If you have some performance issues, then you can implement the IQueryable.
+                var x = userTable.GetUsers() as List<TUser>;
+                return x != null ? x.AsQueryable() : null;
             }
         }
-
 
         /// <summary>
         /// Default constructor that initializes a new Oracle Database

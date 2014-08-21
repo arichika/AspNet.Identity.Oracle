@@ -173,6 +173,7 @@ namespace AspNet.Identity.Oracle
         private OracleCommand createCommand(string commandText, IEnumerable parameters)
         {
             var command = connection.CreateCommand();
+            command.BindByName = true;
             command.CommandText = commandText;
             addParameters(command, parameters);
 
