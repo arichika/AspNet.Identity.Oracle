@@ -124,9 +124,16 @@ namespace AspNet.Identity.Oracle
             return users;
         }
 
+        /// <summary>
+        /// Get Users by email
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
         public List<TUser> GetUserByEmail(string email)
         {
-            return null;
+            var users = new List<TUser>();
+            // throw new NotImplementedException();
+            return users;
         }
 
         /// <summary>
@@ -271,6 +278,37 @@ namespace AspNet.Identity.Oracle
             };
 
             return _database.Execute(commandText, parameters);
+        }
+
+        /// <summary>
+        /// Returns all list of TUser instances
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<TUser> GetUsers()
+        {
+            var users = new List<TUser>();
+            const string commandText = @"SELECT * FROM ANID2USERS";
+
+            var rows = _database.Query(commandText, null);
+            foreach (var row in rows)
+            {
+                var user = (TUser)Activator.CreateInstance(typeof(TUser));
+                user.Id = row["ID"];
+                user.UserName = row["USERNAME"];
+                user.PasswordHash = string.IsNullOrEmpty(row["PASSWORDHASH"]) ? null : row["PASSWORDHASH"];
+                user.SecurityStamp = string.IsNullOrEmpty(row["SECURITYSTAMP"]) ? null : row["SECURITYSTAMP"];
+                user.Email = string.IsNullOrEmpty(row["EMAIL"]) ? null : row["EMAIL"];
+                user.EmailConfirmed = (row["EMAILCONFIRMED"] == "1");
+                user.PhoneNumber = string.IsNullOrEmpty(row["PHONENUMBER"]) ? null : row["PHONENUMBER"];
+                user.PhoneNumberConfirmed = (row["PHONENUMBERCONFIRMED"] == "1");
+                user.LockoutEnabled = (row["LOCKOUTENABLED"] == "1");
+                user.LockoutEndDateUtc = string.IsNullOrEmpty(row["LOCKOUTENDDATEUTC"]) ? DateTime.Now : DateTime.Parse(row["LOCKOUTENDDATEUTC"]);
+                user.AccessFailedCount = string.IsNullOrEmpty(row["ACCESSFAILEDCOUNT"]) ? 0 : int.Parse(row["ACCESSFAILEDCOUNT"]);
+                user.TwoFactorEnabled = (row["TWOFACTORENABLED"] == "1");
+                users.Add(user);
+            }
+
+            return users;
         }
     }
 }

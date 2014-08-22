@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.Identity;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -14,14 +15,20 @@ namespace AspNet.Identity.Oracle
         private RoleTable roleTable;
         public OracleDatabase Database { get; private set; }
 
+        /// <summary>
+        /// Get all Roles defined.
+        /// This code is a loose implementation.
+        /// An occurrence of a performance problem is when you get a large amount of data.
+        /// </summary>
         public IQueryable<TRole> Roles
         {
             get
             {
-                throw new NotImplementedException();
+                // If you have some performance issues, then you can implement the IQueryable.
+                var x = roleTable.GetRoles() as List<TRole>;
+                return x != null ? x.AsQueryable() : null;
             }
         }
-
 
         /// <summary>
         /// Default constructor that initializes a new Oracle Database
