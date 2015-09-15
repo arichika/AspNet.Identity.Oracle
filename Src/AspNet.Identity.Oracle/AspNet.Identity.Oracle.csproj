@@ -98,7 +98,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="OracleIdentity.sql" />
+    <None Include="OracleIdentity.sql.txt" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Readme.txt" />

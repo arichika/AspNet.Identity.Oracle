@@ -44,7 +44,7 @@ namespace AspNet.Identity.Oracle
         {
             int result;
 
-            if (String.IsNullOrEmpty(commandText))
+            if (string.IsNullOrEmpty(commandText))
             {
                 throw new ArgumentException("Command text cannot be null or empty.");
             }
@@ -73,7 +73,7 @@ namespace AspNet.Identity.Oracle
         {
             object result;
 
-            if (String.IsNullOrEmpty(commandText))
+            if (string.IsNullOrEmpty(commandText))
             {
                 throw new ArgumentException("Command text cannot be null or empty.");
             }
@@ -102,7 +102,7 @@ namespace AspNet.Identity.Oracle
         public List<Dictionary<string, string>> Query(string commandText, IEnumerable parameters)
         {
             List<Dictionary<string, string>> rows;
-            if (String.IsNullOrEmpty(commandText))
+            if (string.IsNullOrEmpty(commandText))
             {
                 throw new ArgumentException("Command text cannot be null or empty.");
             }

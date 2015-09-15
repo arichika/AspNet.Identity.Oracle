@@ -15,6 +15,13 @@ namespace IdentitySample {
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
             app.CreatePerOwinContext<ApplicationRoleManager>(ApplicationRoleManager.Create);
 
+            // Run once initializing code.
+            // This code, please call after the 
+            //   .CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
+            //   .CreatePerOwinContext<ApplicationRoleManager>(ApplicationRoleManager.Create);
+            // callings.
+            app.CreatePerOwinContext<ApplicationDbInitializer>(ApplicationDbInitializer.Create);
+
             // Enable the application to use a cookie to store information for the signed in user
             // and to use a cookie to temporarily store information about a user logging in with a third party login provider
             // Configure the sign in cookie

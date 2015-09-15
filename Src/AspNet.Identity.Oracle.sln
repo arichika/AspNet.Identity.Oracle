@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleWebSite", "SampleWebSite\SampleWebSite.csproj", "{DA7762F8-1A8B-452E-A20F-0F4BB5E072EC}"
 EndProject
@@ -17,17 +17,27 @@ EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
 		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{DA7762F8-1A8B-452E-A20F-0F4BB5E072EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DA7762F8-1A8B-452E-A20F-0F4BB5E072EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA7762F8-1A8B-452E-A20F-0F4BB5E072EC}.Debug|x64.ActiveCfg = Debug|x64
+		{DA7762F8-1A8B-452E-A20F-0F4BB5E072EC}.Debug|x64.Build.0 = Debug|x64
 		{DA7762F8-1A8B-452E-A20F-0F4BB5E072EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA7762F8-1A8B-452E-A20F-0F4BB5E072EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA7762F8-1A8B-452E-A20F-0F4BB5E072EC}.Release|x64.ActiveCfg = Release|x64
+		{DA7762F8-1A8B-452E-A20F-0F4BB5E072EC}.Release|x64.Build.0 = Release|x64
 		{26F6ECF9-4369-417B-8CF2-54FA92DF3660}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{26F6ECF9-4369-417B-8CF2-54FA92DF3660}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26F6ECF9-4369-417B-8CF2-54FA92DF3660}.Debug|x64.ActiveCfg = Debug|x64
+		{26F6ECF9-4369-417B-8CF2-54FA92DF3660}.Debug|x64.Build.0 = Debug|x64
 		{26F6ECF9-4369-417B-8CF2-54FA92DF3660}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{26F6ECF9-4369-417B-8CF2-54FA92DF3660}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26F6ECF9-4369-417B-8CF2-54FA92DF3660}.Release|x64.ActiveCfg = Release|x64
+		{26F6ECF9-4369-417B-8CF2-54FA92DF3660}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
