@@ -14,7 +14,7 @@ namespace AspNet.Identity.Oracle
      /// </summary>
     public class OracleDatabase : IDisposable
     {
-        private OracleConnection connection;
+        private OracleConnection _connection;
 
         /// <summary>
         /// Default constructor which uses the "DefaultConnection" connectionString
@@ -31,7 +31,7 @@ namespace AspNet.Identity.Oracle
         public OracleDatabase(string connectionStringName)
         {
             var connectionString = ConfigurationManager.ConnectionStrings[connectionStringName].ConnectionString;
-            connection = new OracleConnection(connectionString);
+            _connection = new OracleConnection(connectionString);
         }
 
         /// <summary>
@@ -51,13 +51,13 @@ namespace AspNet.Identity.Oracle
 
             try
             {
-                ensureConnectionOpen();
-                var command = createCommand(commandText, parameters);
+                EnsureConnectionOpen();
+                var command = CreateCommand(commandText, parameters);
                 result = command.ExecuteNonQuery();
             }
             finally
             {
-                connection.Close();
+                _connection.Close();
             }
 
             return result;
@@ -80,13 +80,13 @@ namespace AspNet.Identity.Oracle
 
             try
             {
-                ensureConnectionOpen();
-                var command = createCommand(commandText, parameters);
+                EnsureConnectionOpen();
+                var command = CreateCommand(commandText, parameters);
                 result = command.ExecuteScalar();
             }
             finally
             {
-                ensureConnectionClosed();
+                EnsureConnectionClosed();
             }
 
             return result;
@@ -109,8 +109,8 @@ namespace AspNet.Identity.Oracle
 
             try
             {
-                ensureConnectionOpen();
-                var command = createCommand(commandText, parameters);
+                EnsureConnectionOpen();
+                var command = CreateCommand(commandText, parameters);
                 using (var reader = command.ExecuteReader())
                 {
                     rows = new List<Dictionary<string, string>>();
@@ -129,7 +129,7 @@ namespace AspNet.Identity.Oracle
             }
             finally
             {
-                ensureConnectionClosed();
+                EnsureConnectionClosed();
             }
 
             return rows;
@@ -138,16 +138,16 @@ namespace AspNet.Identity.Oracle
         /// <summary>
         /// Opens a connection if not open
         /// </summary>
-        private void ensureConnectionOpen()
+        private void EnsureConnectionOpen()
         {
             var retries = 3;
-            if (connection.State == ConnectionState.Open)
+            if (_connection.State == ConnectionState.Open)
             {
                 return;
             }
-            while (retries >= 0 && connection.State != ConnectionState.Open)
+            while (retries >= 0 && _connection.State != ConnectionState.Open)
             {
-                connection.Open();
+                _connection.Open();
                 retries--;
                 Thread.Sleep(30);
             }
@@ -156,11 +156,11 @@ namespace AspNet.Identity.Oracle
         /// <summary>
         /// Closes a connection if open
         /// </summary>
-        private void ensureConnectionClosed()
+        private void EnsureConnectionClosed()
         {
-            if (connection.State == ConnectionState.Open)
+            if (_connection.State == ConnectionState.Open)
             {
-                connection.Close();
+                _connection.Close();
             }
         }
 
@@ -170,12 +170,12 @@ namespace AspNet.Identity.Oracle
         /// <param name="commandText">The Oracle query to execute</param>
         /// <param name="parameters">Parameters to pass to the Oracle query</param>
         /// <returns></returns>
-        private OracleCommand createCommand(string commandText, IEnumerable parameters)
+        private OracleCommand CreateCommand(string commandText, IEnumerable parameters)
         {
-            var command = connection.CreateCommand();
+            var command = _connection.CreateCommand();
             command.BindByName = true;
             command.CommandText = commandText;
-            addParameters(command, parameters);
+            AddParameters(command, parameters);
 
             return command;
         }
@@ -185,7 +185,7 @@ namespace AspNet.Identity.Oracle
         /// </summary>
         /// <param name="command">The Oracle query to execute</param>
         /// <param name="parameters">Parameters to pass to the Oracle query</param>
-        private static void addParameters(OracleCommand command, IEnumerable parameters)
+        private static void AddParameters(OracleCommand command, IEnumerable parameters)
         {
             if (parameters == null) return;
 
@@ -209,10 +209,10 @@ namespace AspNet.Identity.Oracle
 
         public void Dispose()
         {
-            if (connection == null) return;
+            if (_connection == null) return;
 
-            connection.Dispose();
-            connection = null;
+            _connection.Dispose();
+            _connection = null;
         }
     }
 }
