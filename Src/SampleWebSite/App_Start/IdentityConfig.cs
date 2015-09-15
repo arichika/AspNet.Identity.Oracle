@@ -158,30 +158,29 @@ namespace IdentitySample.Models
 
 
      //This is useful if you do not want to tear down the database each time you run the application.
-    public class ApplicationDbInitializer : IDisposable
+    public sealed class ApplicationDbInitializer : IDisposable
     {
-        private static readonly object thisLock = new object();
-        private static ApplicationDbInitializer applicationDbInitializer;
+        private static readonly object ThisLock = new object();
+        private static volatile ApplicationDbInitializer _applicationDbInitializer;
 
-        private bool isInitialized;
-        private ApplicationDbInitializer()
+        private bool _isInitialized;
+
+        private ApplicationDbInitializer(IOwinContext context)
         {
+            Seed(context);
         }
 
         public static ApplicationDbInitializer Create(IdentityFactoryOptions<ApplicationDbInitializer> options, IOwinContext context)
         {
-            if (applicationDbInitializer != null)
-                return applicationDbInitializer;
+            if (_applicationDbInitializer != null)
+                return _applicationDbInitializer;
 
-            lock (thisLock)
+            lock (ThisLock)
             {
-                if (applicationDbInitializer == null)
-                {
-                    applicationDbInitializer = new ApplicationDbInitializer();
-                    applicationDbInitializer.Seed(context);
-                }
+                if (_applicationDbInitializer != null) return _applicationDbInitializer;
+                _applicationDbInitializer = new ApplicationDbInitializer(context);
             }
-            return applicationDbInitializer;
+            return _applicationDbInitializer;
         }
 
         /// <summary>
@@ -190,19 +189,18 @@ namespace IdentitySample.Models
         /// <param name="context"></param>
         private void Seed(IOwinContext context)
         {
-            if (isInitialized) return;
+            if (_isInitialized) return;
 
             InitializeDb(context);
             InitializeIdentity(context);
 
-            isInitialized = true;
+            _isInitialized = true;
         }
 
         // Verify Db or Tables and Create it, If you need.
-        private void InitializeDb(IOwinContext context)
+        private static void InitializeDb(IOwinContext context)
         {
             // var oracleDatabase = context.Get<ApplicationDbContext>() as OracleDatabase;
-
             // e.g. Run the DDL if Table is not.
         }
 
@@ -237,7 +235,7 @@ namespace IdentitySample.Models
             }
         }
 
-        bool disposed = false;
+        bool _disposed;
 
         public void Dispose()
         {
@@ -245,9 +243,9 @@ namespace IdentitySample.Models
             GC.SuppressFinalize(this);
         }
 
-        protected virtual void Dispose(bool disposing)
+        private void Dispose(bool disposing)
         {
-            if (disposed) return;
+            if (_disposed) return;
 
             if (disposing)
             {
@@ -255,7 +253,7 @@ namespace IdentitySample.Models
             }
 
             // Free any unmanaged objects here.
-            disposed = true;
+            _disposed = true;
         }
     }
 
