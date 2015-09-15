@@ -69,6 +69,11 @@ const string roleName = "Admin";
 - Before you do debugging, you must create the tables in the database.
  Please run DDL Script, "OracleIdentity.sql.txt" in the AspNet.Identity.Oracle project.
 
+- If you have an error appears at the start of debugging, please try the following below.
+  - To start the Visual Studio by "Run as Administrator". 
+  - Debugging on the "Local IIS" not "IIS Express".
+  - Check build platform Win32 or x64, this project and installed ODP.NET.
+
 
 Notice
 ======
