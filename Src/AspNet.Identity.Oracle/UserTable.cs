@@ -132,7 +132,30 @@ namespace AspNet.Identity.Oracle
         public List<TUser> GetUserByEmail(string email)
         {
             var users = new List<TUser>();
-            // throw new NotImplementedException();
+            const string commandText = @"SELECT * FROM ANID2USERS WHERE EMAIL = :EMAIL";
+            var parameters = new List<OracleParameter>
+            {
+                new OracleParameter{ ParameterName = "EMAIL", Value = email, OracleDbType = OracleDbType.Varchar2}
+            };
+
+            var rows = _database.Query(commandText, parameters);
+            foreach (var row in rows)
+            {
+                var user = (TUser)Activator.CreateInstance(typeof(TUser));
+                user.Id = row["ID"];
+                user.UserName = row["USERNAME"];
+                user.PasswordHash = string.IsNullOrEmpty(row["PASSWORDHASH"]) ? null : row["PASSWORDHASH"];
+                user.SecurityStamp = string.IsNullOrEmpty(row["SECURITYSTAMP"]) ? null : row["SECURITYSTAMP"];
+                user.Email = string.IsNullOrEmpty(row["EMAIL"]) ? null : row["EMAIL"];
+                user.EmailConfirmed = (row["EMAILCONFIRMED"] == "1");
+                user.PhoneNumber = string.IsNullOrEmpty(row["PHONENUMBER"]) ? null : row["PHONENUMBER"];
+                user.PhoneNumberConfirmed = (row["PHONENUMBERCONFIRMED"] == "1");
+                user.LockoutEnabled = (row["LOCKOUTENABLED"] == "1");
+                user.LockoutEndDateUtc = string.IsNullOrEmpty(row["LOCKOUTENDDATEUTC"]) ? DateTime.Now : DateTime.Parse(row["LOCKOUTENDDATEUTC"]);
+                user.AccessFailedCount = string.IsNullOrEmpty(row["ACCESSFAILEDCOUNT"]) ? 0 : int.Parse(row["ACCESSFAILEDCOUNT"]);
+                user.TwoFactorEnabled = (row["TWOFACTORENABLED"] == "1");
+                users.Add(user);
+            }
             return users;
         }
 
