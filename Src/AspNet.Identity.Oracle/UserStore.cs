@@ -378,7 +378,12 @@ namespace AspNet.Identity.Oracle
         /// <returns></returns>
         public Task RemoveFromRoleAsync(TUser user, string role)
         {
-            throw new NotImplementedException();
+            int roles = 0;
+            if (user != null)
+            {
+                roles = userRolesTable.Delete(user.Id);
+            }
+            return Task.FromResult(roles);
         }
 
         /// <summary>
