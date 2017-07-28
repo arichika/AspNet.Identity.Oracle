@@ -87,7 +87,7 @@ namespace AspNet.Identity.Oracle
         /// <returns></returns>
         public int Delete(IdentityUser user, Claim claim)
         {
-            const string commandText = @"DELETE FROM ANID2USERCLAIMS WHERE USERID = :USERID AND @CLAIMVALUE = :VALUE AND CLAIMTYPE = :TYPE";
+            const string commandText = @"DELETE FROM ANID2USERCLAIMS WHERE USERID = :USERID AND CLAIMVALUE = :VALUE AND CLAIMTYPE = :TYPE";
             var parameters = new List<OracleParameter>
             {
                 new OracleParameter{ ParameterName = "USERID", Value = user.Id, OracleDbType = OracleDbType.Varchar2 },
