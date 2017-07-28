@@ -1,5 +1,4 @@
-﻿using IdentitySample.Models;
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System.Linq;
 using System.Net;
@@ -8,8 +7,10 @@ using System.Web;
 using System.Web.Mvc;
 using System.Collections.Generic;
 using AspNet.Identity.Oracle;
+using SampleWebSite.Models;
+using SampleWebSite.ViewModels;
 
-namespace IdentitySample.Controllers
+namespace SampleWebSite.Controllers
 {
     [Authorize(Roles = "Admin")]
     public class RolesAdminController : Controller
