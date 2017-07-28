@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace IdentitySample.Controllers {
+namespace SampleWebSite.Controllers {
     public class HomeController : Controller {
         public ActionResult Index()
         {

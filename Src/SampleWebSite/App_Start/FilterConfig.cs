@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace IdentitySample
+namespace SampleWebSite
 {
     public class FilterConfig
     {
