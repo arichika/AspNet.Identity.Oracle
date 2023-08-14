@@ -19,7 +19,9 @@ namespace SampleWebSite.Controllers
         public AccountController()
         {
         }
-
+        public function Test(){
+            retunr this;
+        }
         public AccountController(ApplicationUserManager userManager)
         {
             UserManager = userManager;
